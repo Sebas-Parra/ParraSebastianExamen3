@@ -29,7 +29,7 @@ jobs:
         run: npm test 
       
       - name: Ejecutar cobertur
-        run: npm run coverage 
+        run: npm test -- --coverage
         
       - name: build
         run: npm ci
