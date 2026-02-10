@@ -24,5 +24,22 @@ describe('Test de conversion de temperatura', () => {
   test('toFahrenheit lanza error si el valor no es un numero', () => {
     expect(() => toFahrenheit('xyz')).toThrow(TypeError);
   });
+
+  test('funcion movingaverage da error si no es un arreglo', () => {
+    expect(() => movingAverage('Hola como estas cxddd', 3)).toThrow(TypeError);
+  });
+
+  test('movingAverage lanza error si series tiene un valor no numérico', () => {
+    expect(() => movingAverage([1, 2, '3', 'holiqiw'], 2)).toThrow(TypeError);
+  });
+
+  test('movingaverage hace correctamente el calculo', () => {
+    const series = [10,20,30,40];
+    const window = 2;
+    const esperado = [15.0, 25.0, 35.0];
+    expect(movingAverage(series, window)).toEqual(esperado);
+  });
+
+
   
 });
