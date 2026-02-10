@@ -13,18 +13,11 @@ function toFahrenheit(c) {
   const factor = 10 ** 2;
   return Math.round((c * (9 / 5) + 32 + Number.EPSILON) * factor) / factor;
 }
-
-function roundTo(num, decimals) {
-  const factor = 10 ** decimals;
-  return Math.round((num + Number.EPSILON) * factor) / factor;
-}
-
 function movingAverage(series, window) {
   if (!Array.isArray(series)) {
     throw new TypeError('series debe ser un arreglo');
   }
 
-  // Validación de valores no numéricos
   for (let i = 0; i < series.length; i++) {
     if (!Number.isFinite(series[i])) {
       throw new TypeError(
@@ -38,23 +31,22 @@ function movingAverage(series, window) {
   }
   if (window < 2 || window > series.length) {
     throw new RangeError(
-      'window debe ser >= 2 y <= series.length'
+      'window debe ser >= 2 y <= el tamano de series'
     );
   }
 
   const result = [];
   let sum = 0;
+  const factor = 10 ** 2;
 
-  // suma de la primera ventana
+
   for (let i = 0; i < window; i++) {
     sum += series[i];
   }
-  result.push(roundTo(sum / window, 2));
-
-  // deslizar ventana
+  result.push(Math.round((sum / window + Number.EPSILON) * factor) / factor);
   for (let i = window; i < series.length; i++) {
     sum += series[i] - series[i - window];
-    result.push(roundTo(sum / window, 2));
+    result.push(Math.round((sum / window + Number.EPSILON) * factor) / factor);
   }
 
   return result;
